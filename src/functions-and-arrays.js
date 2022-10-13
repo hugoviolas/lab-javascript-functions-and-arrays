@@ -269,17 +269,42 @@ const matrix = [
 ];
 
 function greatestProduct(arr) {
-  //let max = -Infinity;
+  let horizontalMax = -Infinity;
+  let verticalMax = -Infinity;
   function horizontalCheck(arr) {
-    let horizontalSum = 0;
-    for (let i = 0; i < 5; i++) {
-      for (let j = i; j < 5; j++) {
-        console.log(arr[i][j]);
+    let horizontalSum = 1;
+    for (let i = 0; i < arr.length; i++) {
+      let line = arr[i];
+      console.log(line);
+      for (j = 0; j < line.length - 3; j++) {
+        let number = line[j];
+        horizontalSum = line[j] * line[j + 1] * line[j + 2] * line[j + 3];
+        if (horizontalSum > horizontalMax) {
+          horizontalMax = horizontalSum;
+        }
       }
     }
-    console.log(horizontalSum);
+    return horizontalMax;
+  }
+  function verticalCheck(arr) {
+    let verticalSum = 1;
+    for (let i = 0; i < arr.length - 3; i++) {
+      for (let j = 0; j < arr.length - 3; j++) {
+        //console.log("I= " + i, "J= " + j);
+        //console.log(arr[i][j] * arr[i + 1][j] * arr[i + 2][j] * arr[i + 3][j]);
+        verticalSum = arr[i][j] * arr[i + 1][j] * arr[i + 2][j] * arr[i + 3][j];
+        if (verticalSum > verticalMax) {
+          verticalMax = verticalSum;
+        }
+      }
+    }
+    return verticalMax;
   }
   horizontalCheck(arr);
+  verticalCheck(arr);
+  return horizontalCheck(arr) > verticalCheck
+    ? horizontalCheck(arr)
+    : verticalCheck(arr);
 }
 greatestProduct(matrix);
 
